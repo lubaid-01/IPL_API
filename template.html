@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL API</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    
+    <div class = 'wel'>
+
+            <h1>Hi user welcome to our api...🚀🚀🌐</h1>
+            <h3 style="font-weight: 600; font-size: larger; padding: 10.5px 0px  ">IPL Dataset API Overview :</h3>
+            <p id = 'info'><p style="font-weight: 500; font-size: larger;">Description:</p> The  API provides access to a comprehensive dataset related to the Indian Premier League (IPL),
+                           allowing users to retrieve various data points in JSON format.
+                           The API is designed to facilitate easy access to IPL statistics, player information,
+                           match details, and other relevant data for developers, analysts, and cricket enthusiasts.</p>
+                           
+            <p style="font-weight: 500; font-size: larger; width: 70vw; ">Endpoints :</p>
+            
+            <div style="width: 70vw;">
+
+                <ul style="line-height: 2.3;">
+                    <li><p id ='hi'>/info:</p> Returns information about a data e.g names of lpayers, stadiums etc.</li>
+                    <li> <p id ='hi'>/player/player_name:</p> Retrieves information about players, including statistics, team affiliations, and profiles. e.g base_url/player/V Kohli</li>
+                    <li><p id ='hi'>/playervenue/player/venue:</p> Returns statistics of a player at a venue. e.g base_url/V Kohli/Chenna Swami Stadium</li>
+                    <li><p id ='hi'>/team/team_name:</p> Provides data on all IPL teams, including team members, history, and performance metrics. e.g base_url/team/Royal Challengers Bangalore</li>
+                    <li><p id ='hi'>/venue:</p> Returns information about different venues used in the IPL, including location and capacity. e.g base_url/Chenna Swami Stadium</li>
+                    <li><p id ='hi'>/season/year:</p> Returns information about a season. e.g base_url/2019</li>
+                    <li><p id ='hi'>/pvp/batsman/bowler:</p> Returns statistics of a batsman against a bowler e.g base_url/V kohli/J Bumrah</li>
+                    <li><p id ='hi'>/vs/team1/team2:</p> Returns information about all matches played between the teams season and date wise. e.g base_url/Delhi Daredevils/Rajasthan Royals</li>
+                </ul>
+            </div>
+
+            <p id="info"><p style="font-weight: 500; font-size: larger; ">Data Format:</p> All responses from the API are in JSON format, making it easy to integrate with web applications 
+                and other services. Each endpoint returns structured data,
+                 ensuring users can easily parse and utilize the information.</p>
+           <p id="info"><p style="font-weight: 500; font-size: larger; ">Usage:</p> Developers can use the API to build applications, conduct data analysis, or enhance cricket-related platforms. The API supports various query parameters to filter and
+                                                                         sort the data based on user requirements.</p>
+
+        <div style="height: 60px; width: 70vw;"></div>
+    </div>
+
+</body>
+</html>
