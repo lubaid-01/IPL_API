@@ -6,7 +6,7 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 @app.route('/')
 def main():
-    return render_template('template.html')
+    return render_template('index.html')
 @app.route('/info')
 def info_func():
     return jsonify(info())
