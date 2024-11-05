@@ -38,7 +38,23 @@ def delv_transform():
     delv['fielder'] = delv['fielder'].str.lower()
 
     return
+# correcting the veenue
+def veneu_transform():
+    def veneu_resolve(ven):
+        if 'stadium' in ven:
+           ven = ven.split("stadium",1)
+           ven = ven[0]
+        ven += 'stadium'
+        return 
+    mch['venue'] = mch['venue'].apply(veneu_resolve)
+  
+    mch.loc[mch['venue'] == 'dr dy patil sports academystadium', 'venue'] = 'dr dy patil sports academy stadium'
+    mch.loc[mch['venue'] == 'dr dy patil sports academy, mumbaistadium', 'venue'] = 'dr dy patil sports academy stadium'
+    mch.loc[mch['venue'] == 'm.chinnaswamy stadium', 'venue'] = 'm chinnaswamy stadium'
+  
+    return 
 
+# loading the dataset
 path = kagglehub.dataset_download("patrickb1912/ipl-complete-dataset-20082020")
 mch = pd.read_csv(f'{path}/matches.csv')
 delv = pd.read_csv(f'{path}/deliveries.csv')
@@ -50,6 +66,7 @@ delv = delv[(delv['inning'].isin([1,2]))]
 
 mch_transform()
 delv_transform()
+veneu_transform():
 
 #info about data
 def info():
