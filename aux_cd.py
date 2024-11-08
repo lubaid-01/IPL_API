@@ -65,7 +65,7 @@ delv = delv[(delv['inning'].isin([1,2]))]
 
 mch_transform()
 delv_transform()
-veneu_transform():
+veneu_transform()
 
 #info about data
 def info():
