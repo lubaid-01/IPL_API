@@ -36,22 +36,19 @@ def delv_transform():
     delv['batting_team'] = delv['batting_team'].str.replace('supergiant','supergiants')
     delv['player_dismissed'] = delv['player_dismissed'].str.lower()
     delv['fielder'] = delv['fielder'].str.lower()
-
     return
+  
 # correcting the veenue
 def veneu_transform():
     def veneu_resolve(ven):
         if 'stadium' in ven:
-           ven = ven.split("stadium",1)
-           ven = ven[0]
-        ven += 'stadium'
-        return 
+            ven = ven.split("stadium", 1)[0].strip()
+        return ven + ' stadium'
     mch['venue'] = mch['venue'].apply(veneu_resolve)
   
     mch.loc[mch['venue'] == 'dr dy patil sports academystadium', 'venue'] = 'dr dy patil sports academy stadium'
     mch.loc[mch['venue'] == 'dr dy patil sports academy, mumbaistadium', 'venue'] = 'dr dy patil sports academy stadium'
     mch.loc[mch['venue'] == 'm.chinnaswamy stadium', 'venue'] = 'm chinnaswamy stadium'
-  
     return 
 
 # loading the dataset
