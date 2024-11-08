@@ -2,21 +2,23 @@ import pandas as pd
 import numpy as np
 import kagglehub
 
+
+
 def mch_transform():
   mch['player_of_match'] = mch['player_of_match'].str.lower()
   mch['venue'] = mch['venue'].str.lower()
   mch['team1'] = mch['team1'].str.lower()
   mch['team1'] = mch['team1'].str.replace('bengaluru','bangalore')
-  mch['team1'] = mch['team1'].str.replace('supergiant','supergiants')
+  mch['team1'] = mch['team1'].str.replace('supergiants','supergiant')
   mch['team2'] = mch['team2'].str.lower()
   mch['team2'] = mch['team2'].str.replace('bengaluru','bangalore')
-  mch['team2'] = mch['team2'].str.replace('supergiant','supergiants')
+  mch['team2'] = mch['team2'].str.replace('supergiants','supergiant')
   mch['toss_winner'] = mch['toss_winner'].str.lower()
   mch['toss_winner'] = mch['toss_winner'].str.replace('bengaluru','bangalore')
-  mch['toss_winner'] = mch['toss_winner'].str.replace('Supergiant','supergiants')
+  mch['toss_winner'] = mch['toss_winner'].str.replace('supergiants','supergiant')
   mch['winner'] = mch['winner'].str.lower()
   mch['winner'] = mch['winner'].str.replace('bengaluru','bangalore')
-  mch['winner'] = mch['winner'].str.replace('Supergiant','Supergiants')
+  mch['winner'] = mch['winner'].str.replace('supergiants','supergiant')
   mch['season'] = mch['season'].str.replace('2007/08','2008')
   mch['season'] = mch['season'].str.replace('2020/21','2020')
   mch['season'] = mch['season'].str.replace('2009/10','2010')
