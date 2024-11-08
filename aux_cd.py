@@ -51,6 +51,7 @@ def veneu_transform():
     mch.loc[mch['venue'] == 'dr dy patil sports academystadium', 'venue'] = 'dr dy patil sports academy stadium'
     mch.loc[mch['venue'] == 'dr dy patil sports academy, mumbaistadium', 'venue'] = 'dr dy patil sports academy stadium'
     mch.loc[mch['venue'] == 'm.chinnaswamy stadium', 'venue'] = 'm chinnaswamy stadium'
+    mch.loc[mch['venue'] == 'punjab cricket association stadium', 'venue'] = 'punjab cricket association is bindra stadium'
     return 
 
 # loading the dataset
