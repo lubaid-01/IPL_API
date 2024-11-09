@@ -8,3 +8,4 @@ tqdm==4.66.5
 tornado==6.4.1
 watchdog==4.0.2
 websocket-client==1.8.0
+kagglehub
