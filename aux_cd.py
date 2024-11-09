@@ -41,7 +41,14 @@ def delv_transform():
     return
   
 # correcting the veenue
+def veneu_transform():
+    def veneu_resolve(ven):
+        if ',' in ven:
+            ven = ven.split(",", 1)[0].strip()
+        return ven 
 
+    mch['venue'] = mch['venue'].apply(veneu_resolve)
+    mch.loc[mch['venue'] == 'm.chinnaswamy stadium', 'venue'] = 'm chinnaswamy stadium'
 
 # loading the dataset
 path = kagglehub.dataset_download("patrickb1912/ipl-complete-dataset-20082020")
@@ -55,6 +62,8 @@ delv = delv[(delv['inning'].isin([1,2]))]
 
 mch_transform()
 delv_transform()
+veneu_transform()
+
 
 #info about data
 def info():
