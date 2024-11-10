@@ -49,6 +49,8 @@ def veneu_transform():
 
     mch['venue'] = mch['venue'].apply(veneu_resolve)
     mch.loc[mch['venue'] == 'm.chinnaswamy stadium', 'venue'] = 'm chinnaswamy stadium'
+    mch.loc[mch['venue'] == 'punjab cricket association is bindra stadium', 'venue'] = 'punjab cricket association stadium'
+    
 
 # loading the dataset
 path = kagglehub.dataset_download("patrickb1912/ipl-complete-dataset-20082020")
