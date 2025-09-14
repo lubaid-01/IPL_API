@@ -5,23 +5,23 @@ import kagglehub
 
 
 def mch_transform():
-  mch['player_of_match'] = mch['player_of_match'].str.lower()
-  mch['venue'] = mch['venue'].str.lower()
-  mch['team1'] = mch['team1'].str.lower()
-  mch['team1'] = mch['team1'].str.replace('bengaluru','bangalore')
-  mch['team1'] = mch['team1'].str.replace('supergiants','supergiant')
-  mch['team2'] = mch['team2'].str.lower()
-  mch['team2'] = mch['team2'].str.replace('bengaluru','bangalore')
-  mch['team2'] = mch['team2'].str.replace('supergiants','supergiant')
-  mch['toss_winner'] = mch['toss_winner'].str.lower()
-  mch['toss_winner'] = mch['toss_winner'].str.replace('bengaluru','bangalore')
-  mch['toss_winner'] = mch['toss_winner'].str.replace('supergiants','supergiant')
-  mch['winner'] = mch['winner'].str.lower()
-  mch['winner'] = mch['winner'].str.replace('bengaluru','bangalore')
-  mch['winner'] = mch['winner'].str.replace('supergiants','supergiant')
-  mch['season'] = mch['season'].str.replace('2007/08','2008')
-  mch['season'] = mch['season'].str.replace('2020/21','2020')
-  mch['season'] = mch['season'].str.replace('2009/10','2010')
+    mch['player_of_match'] = mch['player_of_match'].str.lower()
+    mch['venue'] = mch['venue'].str.lower()
+    mch['team1'] = mch['team1'].str.lower()
+    mch['team1'] = mch['team1'].str.replace('bengaluru','bangalore')
+    mch['team1'] = mch['team1'].str.replace('supergiants','supergiant')
+    mch['team2'] = mch['team2'].str.lower()
+    mch['team2'] = mch['team2'].str.replace('bengaluru','bangalore')
+    mch['team2'] = mch['team2'].str.replace('supergiants','supergiant')
+    mch['toss_winner'] = mch['toss_winner'].str.lower()
+    mch['toss_winner'] = mch['toss_winner'].str.replace('bengaluru','bangalore')
+    mch['toss_winner'] = mch['toss_winner'].str.replace('supergiants','supergiant')
+    mch['winner'] = mch['winner'].str.lower()
+    mch['winner'] = mch['winner'].str.replace('bengaluru','bangalore')
+    mch['winner'] = mch['winner'].str.replace('supergiants','supergiant')
+    mch['season'] = mch['season'].str.replace('2007/08','2008')
+    mch['season'] = mch['season'].str.replace('2020/21','2020')
+    mch['season'] = mch['season'].str.replace('2009/10','2010')
 
 
 
@@ -68,21 +68,24 @@ veneu_transform()
 
 
 #info about data
-def info():
+def info() -> dict[str,list[str]]:
     all_teams = np.union1d(mch['team1'], mch['team2'])
-    players = np.unique( np.concatenate((delv['batter'].dropna() , delv['non_striker'].dropna(), delv['bowler'].dropna(), delv['fielder'].dropna())))
+    players = np.unique(
+        np.concatenate((delv['batter'].dropna(),
+                        delv['non_striker'].dropna(),
+                        delv['bowler'].dropna(),
+                        delv['fielder'].dropna())))
     season = mch['season'].unique()
     venue = mch['venue'].unique()
-    dic = {
-       'teams'   : list(np.sort(all_teams)),
-       'players' : list(players),
-       'Seasons' : list(np.sort(season)),
-       'venues'   :list(np.sort(venue))
-        }
-
+    dic: dict[str, any] = {
+        'teams': list(np.sort(all_teams)),
+        'players': list(players),
+        'Seasons': list(np.sort(season)),
+        'venues': list(np.sort(venue))
+    }
     return dic
 # info about single team
-def team_info(name):
+def team_info(name) -> dict[str, object]:
 
     # name = 'Royal Challengers Bangalore'
     team_df = mch[ (mch['team1'] == name) | (mch['team2'] == name) ]
@@ -102,7 +105,7 @@ def team_info(name):
     n_title = mch[(mch['match_type'] == 'Final') & (mch['winner'] == name) ].shape[0]
     t_year  = mch[(mch['match_type'] == 'Final') & (mch['winner'] == name) ]['season'].values
 
-    dic = {
+    dic: dict[str, object] = {
         'total matches' : int(t_matches),
         'highest run scorer' : (highest_run_scorer,int(highest_run_scored)),
         'highest wicket taker' : (best_bowler, int(best_bowler_wickets)),
@@ -113,17 +116,14 @@ def team_info(name):
         'toss match won prct' : round(tm_per,2),
         'num title won' : int(n_title),
         'won in'        : list(t_year)
-
-
     }
-
     return dic
 
 #Match Details: Match ID, Date, Venue, Teams Playing, Match Result, Toss Winner, Man of the Match. Scorecard:
 #Team 1: Runs, Wickets, Overs Played.
 #Team 2: Runs, Wickets, Overs Played.
 #venue, toss winner , elecetd to, match winner, margin, player performane, POM, highest scorrer.(extra runs per over)
-def match_details(match_id):
+def match_details(match_id : int)  -> dict[str, object]:
     # Filter data for the given match ID
     match_df = mch[mch['id'] == match_id]
     dlv_df = delv[delv['match_id'] == match_id]
@@ -155,7 +155,7 @@ def match_details(match_id):
     highest_score = int(dlv_df.groupby('batter')['batsman_runs'].sum().max())
 
     # Final dictionary to store match details
-    match_info = {
+    match_info : dict[str, object] = {
         'venue': venue,
         'teams_playing': (team1, team2),
         'toss_winner': toss_winner,
@@ -182,26 +182,25 @@ def match_details(match_id):
     return match_info
 
 
-def find_matches(team1 , team2):
+def find_matches(team1 : str, team2: str)   -> dict[str, dict[str, dict[str, object]]]:
+    #finding all matches one by one
+    seasons = mch['season'].unique() # get all seasons
+    dic : dict[str, dict[str, dict[str, object]]] = {}
+    for i in seasons :
 
-  #finding all matches one by one
-  seasons = mch['season'].unique() # get all seasons
-  dic = {}
-  for i in seasons :
+        season_df = mch[mch['season'] == i]
+        match_ids = season_df[((season_df['team1'] == team1) & (season_df['team2'] == team2)) | ((season_df['team1'] == team2) & (season_df['team2'] == team1))]['id'].values
+        dates = {}
+        for j in match_ids :
+            dates[ season_df[season_df['id'] == j ]['date'].values[0] ] = match_details(j)
 
-    season_df = mch[mch['season'] == i]
-    match_ids = season_df[((season_df['team1'] == team1) & (season_df['team2'] == team2)) | ((season_df['team1'] == team2) & (season_df['team2'] == team1))]['id'].values
-    dates = {}
-    for j in match_ids :
-      dates[ season_df[season_df['id'] == j ]['date'].values[0] ] = match_details(j)
+        dic[i] = dates
 
-    dic[ i ] = dates
-
-  return dic
+    return dic
 
 #player stats function 
 
-def player_stats( player_name , venue = " " ):
+def player_stats( player_name : str, venue = " " )  -> dict[str, object] :
     local_delv = delv.copy()
     if(venue != " "):
        local_delv = local_delv[ local_delv['match_id'].isin(mch[mch['venue'] == venue]['id'].values) ]
@@ -296,93 +295,89 @@ def player_stats( player_name , venue = " " ):
 
 #player vs player
 
-def pvp(batsman, bowler) :
+def pvp(batsman : str, bowler : str)  -> dict[str, dict[str, int]]:
+    local_df = delv[ (delv['bowler'] == bowler) & (delv['batter'] == batsman)]
 
-  local_df = delv[ (delv['bowler'] == bowler) & (delv['batter'] == batsman)]
+    #no of times out
+    out = local_df[ local_df['dismissal_kind'].isin( ['bowled', 'caught', 'lbw', 'stumped', 'caught and bowled', 'hit wicket'])].shape[0]
+    #no of runs conceaved
+    runs = local_df['batsman_runs'].sum()
+    #no of fours
+    fours = local_df[local_df['batsman_runs'] == 4].shape[0]
+    #no of sixes
+    six = local_df[local_df['batsman_runs'] == 6].shape[0]
+    #avg of bats man
+    avg = runs / out if out > 0 else 0
 
-  #no of times out
-  out = local_df[ local_df['dismissal_kind'].isin( ['bowled', 'caught', 'lbw', 'stumped', 'caught and bowled', 'hit wicket'])].shape[0]
-  #no of runs conceaved
-  runs = local_df['batsman_runs'].sum()
-  #no of fours
-  fours = local_df[local_df['batsman_runs'] == 4].shape[0]
-  #no of sixes
-  six = local_df[local_df['batsman_runs'] == 6].shape[0]
-  #avg of bats man
-  avg = runs / out if out > 0 else 0
+    #ttl balls bowled
+    bowler_bowled = local_df[ (local_df['extras_type'] != 'wides') & (local_df['extras_type'] != 'noballs')].shape[0]
+    #balls faced by batsman
+    bats_faced = bowler_bowled - (local_df['extras_type'] == 'wides').sum()
 
-  #ttl balls bowled
-  bowler_bowled = local_df[ (local_df['extras_type'] != 'wides') & (local_df['extras_type'] != 'noballs')].shape[0]
-  #balls faced by batsman
-  bats_faced = bowler_bowled - (local_df['extras_type'] == 'wides').sum()
+    strike_rate = (runs / bats_faced) *100 if bats_faced > 0 else 0
 
-  strike_rate = (runs / bats_faced) *100 if bats_faced > 0 else 0
+    #dots
+    dots = (local_df['total_runs'] == 0).sum()
 
-  #dots
-  dots = (local_df['total_runs'] == 0).sum()
+    runs_conceaved  = local_df[~local_df['extras_type'].isin([ 'byes', 'legbyes','penalty'])]['total_runs'].sum()
+    #econmy
+    economy = (runs_conceaved / (bowler_bowled/6) ) if bowler_bowled > 0 else 0
 
-  runs_conceaved  = local_df[~local_df['extras_type'].isin([ 'byes', 'legbyes','penalty'])]['total_runs'].sum()
-  #econmy
-  economy = (runs_conceaved / (bowler_bowled/6) ) if bowler_bowled > 0 else 0
-
-  dic =  {
-
-      'batsman_stats' : {'no_outs' : int(out),
-                          'batsman_runs' : int(runs),
-                          'no_of_fours' : int(fours),
-                          'no_of_sixes' : int(six),
-                          'batsman_avg'  : int(avg),
-                          'strike_rate'  : int(strike_rate),
-                          'balls_faced'  : int(bats_faced)
-                          },
-        'bowler_stats' : {'balls_bowled' : int(bowler_bowled),
-                          'dots' : int(dots),
-                          'economy' : int(economy)
-                          }
-
-  }
-
-  return dic
+    dic: dict[str, dict[str, int]] = {
+        'batsman_stats': {
+            'no_outs': int(out),
+            'batsman_runs': int(runs),
+            'no_of_fours': int(fours),
+            'no_of_sixes': int(six),
+            'batsman_avg': int(avg),
+            'strike_rate': int(strike_rate),
+            'balls_faced': int(bats_faced)
+        },
+        'bowler_stats': {
+            'balls_bowled': int(bowler_bowled),
+            'dots': int(dots),
+            'economy': int(economy)
+        }
+    }
+    return dic
 
 #venue info
 
-def ven_info( name ):
+def ven_info( name : str )  -> dict[str, object] :
+    ven_df = mch[ mch['venue'] == name ]
 
+    #run stats
+    stats_df = ven_df['target_runs'].describe()
 
-  ven_df = mch[ mch['venue'] == name ]
+    n_mtch = ven_df.shape[0]
+    max_runs = stats_df['max']
+    min_runs = stats_df['min']
+    min_run_row = ven_df[ ven_df['target_runs'] == min_runs ]
+    condition = min_run_row['result'] == 'runs'
+    ing = 'first'
+    if  condition.values[0]:
+        min_runs = min_runs - min_run_row['result_margin'].values[0]
+        ing = 'second'
+    hi_chased  = ven_df[ven_df['result'] == 'wickets']['target_runs'].max()
+    chase_win_prct = ( ven_df[ven_df['result'] == 'wickets'].shape[0] / n_mtch ) * 100
+    toss_win_prct = ( (ven_df[ven_df[ 'toss_winner' ] == ven_df['winner']].shape[0]) / n_mtch ) * 100
+    loc = ven_df['city'].values[0] if ven_df.shape[0] >0 else ''
+    
+    dic : dict[str , object] = {
+        'locaton' : loc,
+        'total_matches' : int(n_mtch),
+        'max_target' : int(max_runs),
+        'min_runs' : (int(min_runs), ing),
+        'highest_chased' : int(hi_chased),
+        'chase_win_perct' : float(chase_win_prct),
+        'toss_win_perct'  : float(toss_win_prct)
 
-#run stats
-  stats_df = ven_df['target_runs'].describe()
-
-  n_mtch = ven_df.shape[0]
-  max_runs = stats_df['max']
-  min_runs = stats_df['min']
-  min_run_row = ven_df[ ven_df['target_runs'] == min_runs ]
-  condition = min_run_row['result'] == 'runs'
-  ing = 'first'
-  if  condition.values[0]:
-    min_runs = min_runs - min_run_row['result_margin'].values[0]
-    ing = 'second'
-  hi_chased  = ven_df[ven_df['result'] == 'wickets']['target_runs'].max()
-  chase_win_prct = ( ven_df[ven_df['result'] == 'wickets'].shape[0] / n_mtch ) * 100
-  toss_win_prct = ( (ven_df[ven_df[ 'toss_winner' ] == ven_df['winner']].shape[0]) / n_mtch ) * 100
-  loc = ven_df['city'].values[0] if ven_df.shape[0] >0 else ''
-  
-  dic = {
-      'locaton' : loc,
-      'total_matches' : int(n_mtch),
-      'max_target' : int(max_runs),
-      'min_runs' : (int(min_runs), ing),
-      'highest_chased' : int(hi_chased),
-      'chase_win_perct' : float(chase_win_prct),
-      'toss_win_perct'  : float(toss_win_prct)
-
-   }
-  return dic
+    }
+    return dic
 
 #season_info 
 
-def season_info(season_year):
+def season_info(season_year : str)  -> dict[str, object] :
     # Filter matches for the given season
     season_df = mch[mch['season'] == season_year]
 
@@ -403,7 +398,7 @@ def season_info(season_year):
     # Winning team of the final match
     final_winner = season_df[season_df['match_type'] == 'Final']['winner'].values[0]
 
-    dic = {
+    dic : dict[str , object]= {
         'season': season_year,
         'total matches': int(t_matches),
         'teams participated': list(teams),

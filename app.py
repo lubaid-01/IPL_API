@@ -1,68 +1,61 @@
-from flask import Flask, jsonify, render_template
-from aux_cd import team_info, find_matches,match_details,player_stats, pvp,ven_info,season_info,info
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse, HTMLResponse
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
 
-app = Flask(__name__)
-app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+from aux_cd import (
+    team_info, find_matches, match_details, player_stats,
+    pvp, ven_info, season_info, info
+)
 
-@app.route('/')
-def main():
-    return render_template('index.html')
-@app.route('/info')
-def info_func():
-    return jsonify(info())
-#team api
-@app.route('/team/<string:name>')
-def t_func(name):
-   
-   return jsonify( team_info(name.lower()) )
+app = FastAPI(title="Cricket API", version="1.0")
 
-#match api
-@app.route('/vs/<string:t1>/<string:t2>')
-def m_func(t1,t2):
+templates = Jinja2Templates(directory="templates")
 
-    return jsonify( find_matches(t1.lower(),t2.lower()) )
-
-#player stats api
-
-@app.route('/player/<string:name>')
-def p_func(name):
-    
-    return jsonify(player_stats( name.lower() ))
-
-#player vs player api
-@app.route('/pvp/<string:batsman>/<string:bowler>')
-def pvp_func(batsman, bowler):
-    
-    return jsonify( pvp(batsman.lower(), bowler.lower()))
-
-#player venue api
-@app.route('/playervenue/<string:player>/<string:venue>')
-def p_venue_func(player, venue):
-
-    return jsonify( player_stats(player_name=player.lower(), venue= venue.lower()))
-
-#venue api
-@app.route('/venue/<string:name>')
-def venue_fun(name):
-
-    return jsonify( ven_info( name.lower() ) )
-
-# season api
-@app.route('/season/<string:name>')
-def season_fun(name):
-
-    return jsonify( season_info( name ) )
-if __name__ == '__main__' :
-    app.run(debug=True)
+# Serve static files if you have (css/js/img)
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
-#print(team_info('Royal Challengers Bangalore'))
-''' 
-Royal Challengers Bangalore
-Kolkata Knight Riders
-Kings XI Punjab
-Chennai Super Kings
-Rajasthan Royals
-Delhi Daredevils
+@app.get("/", response_class=HTMLResponse)
+async def main(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
-'''
+
+@app.get("/info")
+async def info_func():
+    return JSONResponse(content=info())
+
+# Team API
+@app.get("/team/{name}")
+async def t_func(name: str):
+    return JSONResponse(content=team_info(name.lower()))
+
+# Match API
+@app.get("/vs/{t1}/{t2}")
+async def m_func(t1: str, t2: str):
+    return JSONResponse(content=find_matches(t1.lower(), t2.lower()))
+
+# Player stats API
+@app.get("/player/{name}")
+async def p_func(name: str):
+    return JSONResponse(content=player_stats(name.lower()))
+
+# Player vs Player API
+@app.get("/pvp/{batsman}/{bowler}")
+async def pvp_func(batsman: str, bowler: str):
+    return JSONResponse(content=pvp(batsman.lower(), bowler.lower()))
+
+# Player Venue API
+@app.get("/playervenue/{player}/{venue}")
+async def p_venue_func(player: str, venue: str):
+    return JSONResponse(content=player_stats(player_name=player.lower(), venue=venue.lower()))
+
+# Venue API
+@app.get("/venue/{name}")
+async def venue_fun(name: str):
+    return JSONResponse(content=ven_info(name.lower()))
+
+# Season API
+@app.get("/season/{name}")
+async def season_fun(name: str):
+    return JSONResponse(content=season_info(name))
