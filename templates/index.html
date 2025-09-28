@@ -11,7 +11,6 @@
     <div class='wel'>
 
             <h1>Hi user welcome to our api...🚀🚀🌐</h1>
-            <h3 style="font-weight: 600; font-size: larger; padding: 10.5px 0px  ">IPL Dataset API Overview :</h3>
             <p id='info'>
                 <p style="font-weight: 500; font-size: larger;">Description:</p>
                 The API provides access to a comprehensive dataset related to the Indian Premier League (IPL),
@@ -19,78 +18,76 @@
                 to IPL statistics, player information, match details, and other relevant data for developers, analysts,
                 and cricket enthusiasts.
             </p>
+    <p style="font-weight: 500; font-size: larger; width: 70vw;">Endpoints:</p>
 
-            <p style="font-weight: 500; font-size: larger; width: 70vw;">Endpoints :</p>
-
-            <!-- START: Replaced list with endpoints table -->
-            <div style="width: 70vw; overflow-x:auto; margin-bottom: 12px;">
-                <h4 style="margin: 8px 0 6px 0; font-size: 1.05rem;">Available endpoints</h4>
-                <table style="width:100%; border-collapse: collapse; font-size: 0.95rem;">
-                    <thead>
-                        <tr style="text-align:left; border-bottom: 2px solid #ddd;">
-                            <th style="padding:8px 6px; min-width:160px;">Endpoint</th>
-                            <th style="padding:8px 6px;">Description</th>
-                            <th style="padding:8px 6px; min-width:200px;">Example</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="border-bottom:1px solid #f1f1f1;">
-                            <td style="padding:10px 6px;"><code>/info</code></td>
-                            <td style="padding:10px 6px;">General metadata (players, venues, teams)</td>
-                            <td style="padding:10px 6px;"><code>/info</code></td>
-                        </tr>
-                        <tr style="border-bottom:1px solid #f1f1f1;">
-                            <td style="padding:10px 6px;"><code>/player/{player_name}</code></td>
-                            <td style="padding:10px 6px;">Player statistics, profile and team affiliations</td>
-                            <td style="padding:10px 6px;"><code>/player/V Kohli</code></td>
-                        </tr>
-                        <tr style="border-bottom:1px solid #f1f1f1;">
-                            <td style="padding:10px 6px;"><code>/playervenue/{player}/{venue}</code></td>
-                            <td style="padding:10px 6px;">Performance for a player at a specific venue</td>
-                            <td style="padding:10px 6px;"><code>/playervenue/V Kohli/Chenna Swami Stadium</code></td>
-                        </tr>
-                        <tr style="border-bottom:1px solid #f1f1f1;">
-                            <td style="padding:10px 6px;"><code>/team/{team_name}</code></td>
-                            <td style="padding:10px 6px;">Team roster and performance metrics</td>
-                            <td style="padding:10px 6px;"><code>/team/Royal Challengers Bangalore</code></td>
-                        </tr>
-                        <tr style="border-bottom:1px solid #f1f1f1;">
-                            <td style="padding:10px 6px;"><code>/venue/{venue_name}</code></td>
-                            <td style="padding:10px 6px;">Venue details (location, capacity)</td>
-                            <td style="padding:10px 6px;"><code>/venue/Chenna Swami Stadium</code></td>
-                        </tr>
-                        <tr style="border-bottom:1px solid #f1f1f1;">
-                            <td style="padding:10px 6px;"><code>/season/{year}</code></td>
-                            <td style="padding:10px 6px;">Season summary and stats</td>
-                            <td style="padding:10px 6px;"><code>/season/2019</code></td>
-                        </tr>
-                        <tr style="border-bottom:1px solid #f1f1f1;">
-                            <td style="padding:10px 6px;"><code>/pvp/{batsman}/{bowler}</code></td>
-                            <td style="padding:10px 6px;">Batsman vs bowler statistics</td>
-                            <td style="padding:10px 6px;"><code>/pvp/V Kohli/J Bumrah</code></td>
-                        </tr>
-                        <tr>
-                            <td style="padding:10px 6px;"><code>/vs/{team1}/{team2}</code></td>
-                            <td style="padding:10px 6px;">Head-to-head match history between two teams</td>
-                            <td style="padding:10px 6px;"><code>/vs/Delhi Daredevils/Rajasthan Royals</code></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- END: Replaced list with endpoints table -->
-
-            <p id="info">
-                <p style="font-weight: 500; font-size: larger;">Data Format:</p>
-                All responses from the API are in JSON format, making it easy to integrate with web applications
-                and other services. Each endpoint returns structured data, ensuring users can easily parse and utilize the information.
-            </p>
-            <p id="info">
-                <p style="font-weight: 500; font-size: larger;">Usage:</p>
-                Developers can use the API to build applications, conduct data analysis, or enhance cricket-related platforms. The API supports various query parameters to filter and sort the data based on user requirements.
-            </p>
-
-        <div style="height: 60px; width: 70vw;"></div>
+    <div style="width: 70vw; overflow-x:auto; margin-bottom: 12px;">
+        <h4 style="margin: 8px 0 6px 0; font-size: 1.05rem;">Available Endpoints</h4>
+        <table style="width:100%; border-collapse: collapse; font-size: 0.95rem;">
+            <thead>
+                <tr style="text-align:left; border-bottom: 2px solid #ddd;">
+                    <th style="padding:8px 6px; min-width:160px;">Endpoint</th>
+                    <th style="padding:8px 6px;">Description</th>
+                    <th style="padding:8px 6px; min-width:200px;">Example</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom:1px solid #f1f1f1;">
+                    <td style="padding:10px 6px;"><code>/docs</code></td>
+                    <td style="padding:10px 6px;">Interactive API documentation (Swagger UI)</td>
+                    <td style="padding:10px 6px;"><code>/docs</code></td>
+                </tr>
+                <tr style="border-bottom:1px solid #f1f1f1;">
+                    <td style="padding:10px 6px;"><code>/team/{team_name}</code></td>
+                    <td style="padding:10px 6px;">Team roster and performance metrics</td>
+                    <td style="padding:10px 6px;"><code>/team/Royal Challengers Bangalore</code></td>
+                </tr>
+                <tr style="border-bottom:1px solid #f1f1f1;">
+                    <td style="padding:10px 6px;"><code>/player/{player_name}</code></td>
+                    <td style="padding:10px 6px;">Player statistics, profile, and team affiliations</td>
+                    <td style="padding:10px 6px;"><code>/player/V Kohli</code></td>
+                </tr>
+                <tr style="border-bottom:1px solid #f1f1f1;">
+                    <td style="padding:10px 6px;"><code>/playervenue?player=&venue=</code></td>
+                    <td style="padding:10px 6px;">Performance for a player at a specific venue</td>
+                    <td style="padding:10px 6px;"><code>/playervenue?player=V Kohli&venue=m chinnaswamy stadium</code></td>
+                </tr>
+                <tr style="border-bottom:1px solid #f1f1f1;">
+                    <td style="padding:10px 6px;"><code>/venue/{venue_name}</code></td>
+                    <td style="padding:10px 6px;">Venue details (location, capacity)</td>
+                    <td style="padding:10px 6px;"><code>/venue/m chinnaswamy stadium</code></td>
+                </tr>
+                <tr style="border-bottom:1px solid #f1f1f1;">
+                    <td style="padding:10px 6px;"><code>/season/{year}</code></td>
+                    <td style="padding:10px 6px;">Season summary and stats</td>
+                    <td style="padding:10px 6px;"><code>/season/2019</code></td>
+                </tr>
+                <tr style="border-bottom:1px solid #f1f1f1;">
+                    <td style="padding:10px 6px;"><code>/pvp?batsman=&bowler=</code></td>
+                    <td style="padding:10px 6px;">Batsman vs bowler statistics</td>
+                    <td style="padding:10px 6px;"><code>/pvp?batsman=V Kohli&bowler=JJ Bumrah</code></td>
+                </tr>
+                <tr>
+                    <td style="padding:10px 6px;"><code>/vs?team1=&team2=</code></td>
+                    <td style="padding:10px 6px;">Head-to-head match history between two teams</td>
+                    <td style="padding:10px 6px;"><code>/vs?team1=Delhi Daredevils&team2=Rajasthan Royals</code></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+
+    <p id="info">
+        <p style="font-weight: 500; font-size: larger;">Data Format:</p>
+        All responses from the API are in JSON format, making it easy to integrate with web applications
+        and other services. Each endpoint returns structured data, ensuring users can parse it easily.
+    </p>
+    <p id="info">
+        <p style="font-weight: 500; font-size: larger;">Usage:</p>
+        Developers can build applications, perform data analysis, or create cricket-related tools.
+        Query parameters allow filtering and sorting based on user requirements.
+    </p>
+
+    <div style="height: 60px; width: 70vw;"></div>
+</div>
 
 </body>
 </html>
