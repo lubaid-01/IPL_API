@@ -10,42 +10,41 @@ The **IPL Dataset API** provides structured access to a wide array of data from 
 ---
 
 ## 🔗 API Endpoints
-
-### 1. **General Information**
+### 1. **Interactive API Docs**
+- **`/docs`**: Access the Swagger UI for testing all endpoints interactively.
+  - **Example**: `https://ipl-api-ogdg.onrender.com/docs`
+### 2. **General Information**
 - **`/info`**: Retrieve general metadata such as player names, stadium names, etc.
   - **Example**: `https://ipl-api-ogdg.onrender.com/info`
 
-### 2. **Player Details**
+### 3. **Player Details**
 - **`/player/{player_name}`**: Get player-specific statistics, profiles, and team affiliations.
   - **Example**: `https://ipl-api-ogdg.onrender.com/player/V Kohli`
 
-### 3. **Player Venue Statistics**
+### 4. **Player Venue Statistics**
 - **`/playervenue?player=&venue=`**: Player performance data at a specific venue.
   - **Example**: `https://ipl-api-ogdg.onrender.com/playervenue?player=V Kohli&venue=m chinnaswamy stadium`
 
-### 4. **Team Information**
+### 5. **Team Information**
 - **`/team/{team_name}`**: Access team details, including player rosters and performance metrics.
   - **Example**: `https://ipl-api-ogdg.onrender.com/team/Royal Challengers Bangalore`
 
-### 5. **Venue Information**
+### 6. **Venue Information**
 - **`/venue/{venue_name}`**: Get details about IPL venues, including capacity and location.
   - **Example**: `https://ipl-api-ogdg.onrender.com/venue/m chinnaswamy stadium`
 
-### 6. **Season Statistics**
+### 7. **Season Statistics**
 - **`/season/{year}`**: Fetch information about a particular IPL season.
   - **Example**: `https://ipl-api-ogdg.onrender.com/season/2019`
 
-### 7. **Player vs Player Stats**
+### 8. **Player vs Player Stats**
 - **`/pvp?batsman=&bowler=`**: Compare a batsman's performance against a bowler.
   - **Example**: `https://ipl-api-ogdg.onrender.com/pvp?batsman=V Kohli&bowler=JJ Bumrah`
 
-### 8. **Team vs Team Match History**
+### 9. **Team vs Team Match History**
 - **`/vs?team1=&team2=`**: Detailed match history between two teams, sorted by season and date.
   - **Example**: `https://ipl-api-ogdg.onrender.com/vs?team1=Delhi Daredevils&team2=Rajasthan Royals`
 
-### 9. **Interactive API Docs**
-- **`/docs`**: Access the Swagger UI for testing all endpoints interactively.
-  - **Example**: `https://ipl-api-ogdg.onrender.com/docs`
 
 ---
 
