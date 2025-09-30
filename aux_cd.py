@@ -66,22 +66,27 @@ mch_transform()
 delv_transform()
 veneu_transform()
 
+VALID_PLAYERS = np.unique(
+    np.concatenate((
+        delv['batter'].dropna(),
+        delv['non_striker'].dropna(),
+        delv['bowler'].dropna(),
+        delv['fielder'].dropna()
+    ))
+)
+VALID_VENUES = mch['venue'].unique()
+
+
 
 #info about data
 def info() -> dict[str,list[str]]:
     all_teams = np.union1d(mch['team1'], mch['team2'])
-    players = np.unique(
-        np.concatenate((delv['batter'].dropna(),
-                        delv['non_striker'].dropna(),
-                        delv['bowler'].dropna(),
-                        delv['fielder'].dropna())))
     season = mch['season'].unique()
-    venue = mch['venue'].unique()
     dic: dict[str, any] = {
         'teams': list(np.sort(all_teams)),
-        'players': list(players),
+        'players': list(VALID_PLAYERS),
         'Seasons': list(np.sort(season)),
-        'venues': list(np.sort(venue))
+        'venues': list(np.sort(VALID_VENUES))
     }
     return dic
 # info about single team
